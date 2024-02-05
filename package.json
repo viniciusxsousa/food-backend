@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/viniciusxsousa/food-backend/issues"
   },
-  "homepage": "https://github.com/viniciusxsousa/food-backend#readme"
+  "homepage": "https://github.com/viniciusxsousa/food-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
