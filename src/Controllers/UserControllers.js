@@ -1,15 +1,27 @@
 const AppError = require("../utils/AppError");
 
+const knex = require("../database/knex");
+
 class UserControllers {
 
-    create(req, res) {
-        const { name, email } = req.body;
+    async create(req, res) {
+        const { name, email, password } = req.body;
 
         if(!name) {
-            throw new AppError("Nome é obrigatório.");
+            throw new AppError("O nome do usuário deve ser informado");
         }
 
-        res.status(201).send(`O usuário ${name} foi cadastrado com o e-mail ${email}`);
+        await knex("users").insert({
+            name,
+            email,
+            password
+        })
+
+        res.status(201).json({
+            name,
+            email,
+            password
+        });
     }
 
 }
