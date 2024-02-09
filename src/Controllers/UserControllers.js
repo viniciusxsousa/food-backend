@@ -1,4 +1,4 @@
-const { hash } = require('bcryptjs');
+const { hash, compare } = require('bcryptjs');
 
 const AppError = require("../utils/AppError");
 const knex = require("../database/knex");
@@ -35,7 +35,7 @@ class UserControllers {
     }
 
     async update(req, res) {
-        const { name, email } = req.body;
+        const { name, email, old_password, password } = req.body;
         const { id } = req.params;
         
         const user = await knex("users").where({id}).first();
@@ -52,6 +52,20 @@ class UserControllers {
 
         user.name = name ?? user.name;
         user.email = email ?? user.email;
+
+        if(password && !old_password) {
+            throw new AppError("Para atualizar a senha, a senha antiga deve ser informada.");
+        }
+
+        if(password && old_password) {
+            const checkPassword = await compare(old_password, user.password);
+
+            if(!checkPassword) {
+                throw new AppError("A senha antiga está incorreta.");
+            }
+
+            user.password = await hash(password, 8);
+        }
 
         await knex("users").where({id}).update(user);
 
