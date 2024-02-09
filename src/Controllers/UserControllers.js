@@ -11,6 +11,12 @@ class UserControllers {
             throw new AppError("O nome do usuário deve ser informado");
         }
 
+        const emailInUse = await knex("users").where({email}).first();
+
+        if(emailInUse) {
+            throw new AppError("O e-mail já está em uso.");
+        }
+
         await knex("users").insert({
             name,
             email,
