@@ -34,6 +34,30 @@ class UserControllers {
         });
     }
 
+    async update(req, res) {
+        const { name, email } = req.body;
+        const { id } = req.params;
+        
+        const user = await knex("users").where({id}).first();
+
+        if(!user) {
+            throw new AppError("Usuário não encontrado.");
+        }
+
+        const emailInUse = await knex("users").where({email}).first();
+
+        if(emailInUse && emailInUse.id !== user.id ) {
+            throw new AppError("Este e-mail já está em uso.");
+        }
+
+        user.name = name ?? user.name;
+        user.email = email ?? user.email;
+
+        await knex("users").where({id}).update(user);
+
+        res.status(200).json(user);
+    }
+
 }
 
 module.exports = UserControllers;
