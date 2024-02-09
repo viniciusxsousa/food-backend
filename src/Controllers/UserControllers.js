@@ -1,6 +1,8 @@
-const AppError = require("../utils/AppError");
+const { hash } = require('bcryptjs');
 
+const AppError = require("../utils/AppError");
 const knex = require("../database/knex");
+
 
 class UserControllers {
 
@@ -17,16 +19,18 @@ class UserControllers {
             throw new AppError("O e-mail já está em uso.");
         }
 
+        const passwordHash = await hash(password, 8);
+
         await knex("users").insert({
             name,
             email,
-            password
+            password: passwordHash
         })
 
         res.status(201).json({
             name,
             email,
-            password
+            password: passwordHash
         });
     }
 
