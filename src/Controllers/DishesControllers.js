@@ -47,6 +47,14 @@ class DishesControllers {
         });
     }
 
+    async delete(req, res) {
+        const { id } = req.params;
+
+        await knex('dishes').where({id}).delete();
+
+        res.json();
+    }
+
 }
 
 module.exports = DishesControllers
