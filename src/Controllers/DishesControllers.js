@@ -4,7 +4,9 @@ const knex = require('../database/knex');
 class DishesControllers {
 
     async all(req, res) {
-        const dishes = await knex('dishes').orderBy('name');
+        const { name } = req.query;
+
+        const dishes = await knex('dishes').whereLike('name', `%${name}%`).orderBy('name');
 
         res.json(dishes);
     }
