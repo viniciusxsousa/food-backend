@@ -39,7 +39,12 @@ class DishesControllers {
 
         const dished = await knex('dishes').where({id}).first();
 
-        res.json(dished);
+        const ingredients = await knex('ingredients').where({dishe_id: dished.id});
+
+        res.json({
+            dished,
+            ingredients
+        });
     }
 
 }
