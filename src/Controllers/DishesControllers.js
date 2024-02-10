@@ -4,9 +4,32 @@ const knex = require('../database/knex');
 class DishesControllers {
 
     async all(req, res) {
-        const { name } = req.query;
+        const { name, ingredients } = req.query;
 
-        const dishes = await knex('dishes').whereLike('name', `%${name}%`).orderBy('name');
+        let dishes;
+
+        if(ingredients) {
+
+            const filterIngredients = ingredients.split(',').map(ingredient => ingredient.trim());
+
+            dishes = await knex("ingredients")
+                            .select([
+                                "dishes.name",
+                                "dishes.description",
+                                "dishes.price"
+                            ])
+                            .whereLike('dishes.name', `%${name}%`)
+                            .whereIn('ingredients.name', filterIngredients)
+                            .innerJoin('dishes', 'dishes.id', "ingredients.dishe_id")
+                            .orderBy('dishes.name');
+
+            
+
+        } else {
+
+            dishes = await knex('dishes').whereLike('name', `%${name}%`).orderBy('name');
+
+        }
 
         res.json(dishes);
     }
