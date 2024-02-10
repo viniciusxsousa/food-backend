@@ -3,6 +3,12 @@ const knex = require('../database/knex');
 
 class DishesControllers {
 
+    async all(req, res) {
+        const dishes = await knex('dishes').orderBy('name');
+
+        res.json(dishes);
+    }
+    
     async create(req, res){
         const {name, description, category, price, ingredients} = req.body;
 

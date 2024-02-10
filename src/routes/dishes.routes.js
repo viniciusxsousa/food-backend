@@ -9,5 +9,6 @@ const dishesControllers = new DishesControllers();
 dishesRoutes.post('/', dishesControllers.create);
 dishesRoutes.get('/:id', dishesControllers.show);
 dishesRoutes.delete('/:id', dishesControllers.delete);
+dishesRoutes.get('/', dishesControllers.all);
 
 module.exports = dishesRoutes;
