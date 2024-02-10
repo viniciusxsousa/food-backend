@@ -34,6 +34,14 @@ class DishesControllers {
         res.status(201).json({name, description, category, price});
     }
 
+    async show(req, res){
+        const { id } = req.params;
+
+        const dished = await knex('dishes').where({id}).first();
+
+        res.json(dished);
+    }
+
 }
 
 module.exports = DishesControllers
