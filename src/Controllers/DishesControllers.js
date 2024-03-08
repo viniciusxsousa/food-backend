@@ -86,6 +86,30 @@ class DishesControllers {
         res.json();
     }
 
+    async update(req, res) {
+        const { name, description, category, price } = req.body;
+        const { id } = req.params;
+
+        if(!name) {
+            throw new AppError('Por favor informar o nome do prato.');
+        }
+
+        if(!description) {
+            throw new AppError('Por favor inserir a descrição.');
+        }
+
+        if(!category) {
+            throw new AppError('Por favor, selecionar uma categoria');
+        }
+
+        if(!price) {
+            throw new AppError('Por favor, informar o preço');
+        }
+
+        await knex('dishes').where({id}).update({name, description, category, price});
+
+        res.json({message: "Prato atualizado."});
+    }
 }
 
 module.exports = DishesControllers
