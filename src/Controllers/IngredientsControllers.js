@@ -20,6 +20,14 @@ class IngredientsControllers {
 
     }
 
+    async delete(req, res) {
+        const { id } = req.params;
+
+        await knex('ingredients').where({id}).delete();
+
+        res.json({message: "Igrediente deletado."});
+    }
+
 } 
 
 module.exports = IngredientsControllers
