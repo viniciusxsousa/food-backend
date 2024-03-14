@@ -13,10 +13,11 @@ function ensureAuthenticated(req, res, next) {
 
     try{
 
-        const { sub: user_id } = verify(token, authConfig.jwt.secret);
+        const { rule, sub: user_id } = verify(token, authConfig.jwt.secret);
 
         req.user = {
-            id: Number(user_id)
+            id: Number(user_id),
+            rule,
         }
 
         return next();
