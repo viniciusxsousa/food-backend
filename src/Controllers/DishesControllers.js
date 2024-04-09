@@ -62,7 +62,7 @@ class DishesControllers {
 
         await knex("ingredients").insert(ingredientsList);
 
-        res.status(201).json({name, description, category, price});
+        res.status(201).json({id: dished, name, description, category, price});
     }
 
     async show(req, res){
