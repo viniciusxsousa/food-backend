@@ -60,7 +60,7 @@ class DishesControllers {
             }
         })
 
-        if(ingredients.lenght > 0) {
+        if(ingredients.length > 0) {
             await knex("ingredients").insert(ingredientsList);
         }
 
