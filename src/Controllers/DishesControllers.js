@@ -60,7 +60,9 @@ class DishesControllers {
             }
         })
 
-        await knex("ingredients").insert(ingredientsList);
+        if(ingredients.lenght > 0) {
+            await knex("ingredients").insert(ingredientsList);
+        }
 
         res.status(201).json({id: dished, name, description, category, price});
     }
