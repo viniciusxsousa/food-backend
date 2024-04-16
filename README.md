@@ -12,6 +12,8 @@ Você precisa ter o node instalado.
 
 Arquivo insomnia com documentação da API na raiz do projeto.
 
+Para acessar o repositório do front-end do projeto [clique aqui](https://github.com/viniciusxsousa/food-frontend).
+
 ### :globe_with_meridians: Deploy da api
 
 * https://food-backend-ojx8.onrender.com
